@@ -11,7 +11,7 @@ To install RedisLock package, you need to install Go and set your Go workspace f
 1. The first need [Go](https://golang.org/) installed , then you can use the below Go command to install Gin.
 
 ```sh
-$ go get -u github.com/shileislslsl/redislock 
+$ go get -u github.com/stone-stones/redislock 
 ```
 
 2. Import it in your code:
