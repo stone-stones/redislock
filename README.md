@@ -45,11 +45,11 @@ func main() {
 	})
 	rlock := redislock.NewRedisLock(cli)(cli)
 	//lock take three params,lock key,default expiration time,auto refresh key expiration time before unlock the key
-	_, err := rlock.Lock("test_key2", 10*time.Second, true)
+	err := rlock.Lock("test_key2", 10*time.Second, true)
 	if err != nil {
 		log.Error(err)
 	}
-	_, err = rlock.Unlock()
+	err = rlock.Unlock()
 	if err != nil {
 		log.Error(err)
 	}
