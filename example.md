@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
-	"github.com/shileislslsl/redislock"
+	"github.com/stone-stones/redislock"
 )
 
 func main() {

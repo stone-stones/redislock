@@ -17,7 +17,7 @@ $ go get -u github.com/shileislslsl/redislock
 2. Import it in your code:
 
 ```go
-import "github.com/shileislslsl/redislock "
+import "github.com/stone-stones/redislock "
 ```
 
 3. (Optional) Import `github.com/go-redis/redis`. This is required to connect redis.
@@ -34,7 +34,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
-	"github.com/shileislslsl/redislock"
+	"github.com/stone-stones/redislock"
 )
 
 func main() {
