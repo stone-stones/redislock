@@ -1,3 +1,5 @@
+#base use for redislock
+```go
 package redislock
 
 import (
@@ -42,3 +44,5 @@ func main() {
 	//check the lock remain time
 	leftSecond := rlock.TTL()
 }
+
+```
