@@ -1,6 +1,5 @@
 # Distribute Lock In Redis
 
-<img align="right" width="159px" src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png">
 
 RedisLock is a distribute lock tool written in Go (Golang). If you need performance and good productivity, you will love RedisLock.
 
@@ -44,7 +43,7 @@ func main() {
 		Password: "",
 		DB:       0,
 	})
-	rlock := redislock.NewClient(cli)
+	rlock := redislock.NewRedisLock(cli)(cli)
 	//lock take three params,lock key,default expiration time,auto refresh key expiration time before unlock the key
 	_, err := rlock.Lock("test_key2", 10*time.Second, true)
 	if err != nil {
