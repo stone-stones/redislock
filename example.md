@@ -12,12 +12,12 @@ import (
 )
 
 func main() {
-	cli = redis.NewClient(&redis.Options{
+	cli := redis.NewClient(&redis.Options{
 		Addr:     "127.0.0.1:6379",
 		Password: "",
 		DB:       0,
 	})
-	rlock := redislock.NewClient(cli) //will panic if the cli is nil
+	rlock := redislock.NewRedisLock(cli) //will panic if the cli is nil
 	//lock take three params,lock key,default expiration time,auto refresh key expiration time before unlock the key
 	err := rlock.Lock("test_key2", 10*time.Second, true)
 	if err == redislock.LOCKFailed { //get lock while other holding the lock
@@ -31,11 +31,10 @@ func main() {
 	backCtx := context.Background()
 	ctx, cancel := context.WithCancel(backCtx)
 	rlock.SetContext(ctx)
-	ticker = time.After(5 * time.Second)
 	select {
-	case <-ticker.C:
+	case <-time.After(5 * time.Second):
 		cancel()
-	case <-handfuncreturn:
+	case <-handfuncreturn: //your chan to return
 		err = rlock.Unlock()
 		if err != nil {
 			log.Error(err)
