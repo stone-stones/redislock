@@ -28,8 +28,6 @@ const (
 var (
 	//NILClient redis client init error or close
 	NILClient = errors.New("nil client")
-	//TIMEERROR set time error
-	TIMEERROR = errors.New("renew time should short than timeout ")
 	//LOCKFailed get lock failed
 	LOCKFailed = errors.New("set key failed")
 	//UNLOCKVALUEERROR unlock value not match set value
@@ -65,14 +63,13 @@ func (r *RedisLock) SetContext(ctx context.Context) {
 	r.ctx = ctx
 }
 
-//SetLock set redis lock
-func (r *RedisLock) Lock(key string, timeOut time.Duration, renew bool) (value int64, err error) {
+//Lock set redis lock
+func (r *RedisLock) Lock(key string, timeOut time.Duration, renew bool) error {
 	rand.Seed(time.Now().UnixNano())
-	value = rand.Int63()
+	value := rand.Int63()
 	res := r.cli.SetNX(key, value, timeOut).Val()
 	if !res {
-		err = LOCKFailed
-		return
+		return LOCKFailed
 	}
 	r.key = key
 	r.val = value
@@ -83,7 +80,7 @@ func (r *RedisLock) Lock(key string, timeOut time.Duration, renew bool) (value i
 			go r.autoRenewWitchCtx(timeOut)
 		}
 	}
-	return
+	return nil
 }
 
 func (r *RedisLock) autoRenewWitchCtx(timeout time.Duration) {

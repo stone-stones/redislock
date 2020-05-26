@@ -31,11 +31,11 @@ func TestMain(m *testing.M) {
 
 func TestLockSetError(t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock("test_key2", 10*time.Second, true)
+	err := rlock.Lock("test_key2", 10*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found")
 	}
-	_, err = rlock.Lock("test_key2", 1*time.Second, false)
+	err = rlock.Lock("test_key2", 1*time.Second, false)
 	if err != LOCKFailed {
 		t.Errorf("mute set success")
 	}
@@ -43,7 +43,7 @@ func TestLockSetError(t *testing.T) {
 
 func TestKeyTimeOut(t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock("test_key3", 200*time.Millisecond, false)
+	err := rlock.Lock("test_key3", 200*time.Millisecond, false)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
@@ -54,7 +54,7 @@ func TestKeyTimeOut(t *testing.T) {
 }
 func TestKeyNotTimeOut(t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock("test_key4", 1*time.Second, true)
+	err := rlock.Lock("test_key4", 1*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
@@ -66,7 +66,7 @@ func TestKeyNotTimeOut(t *testing.T) {
 
 func TestUnlock(t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock("test_key5", 2*time.Second, true)
+	err := rlock.Lock("test_key5", 2*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
@@ -78,7 +78,7 @@ func TestUnlock(t *testing.T) {
 
 func TestUnlockValueChange(t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock("test_key6", 2*time.Second, true)
+	err := rlock.Lock("test_key6", 2*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
@@ -100,7 +100,7 @@ func TestMuteLockKey(t *testing.T) {
 
 func LockAndUnlock(i int, t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock(fmt.Sprintf("test_key%d", i+10), 2*time.Second, true)
+	err := rlock.Lock(fmt.Sprintf("test_key%d", i+10), 2*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
@@ -116,7 +116,7 @@ func TestCtxLock(t *testing.T) {
 	ctx, cancel := context.WithCancel(backCtx)
 	rlock := NewRedisLock(tCli)
 	rlock.SetContext(ctx)
-	_, err := rlock.Lock("test_key7", 2*time.Second, true)
+	err := rlock.Lock("test_key7", 2*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
@@ -129,7 +129,7 @@ func TestCtxLock(t *testing.T) {
 
 func TestTTl(t *testing.T) {
 	rlock := NewRedisLock(tCli)
-	_, err := rlock.Lock("test_key8", 2*time.Second, true)
+	err := rlock.Lock("test_key8", 2*time.Second, true)
 	if err != nil {
 		t.Error("set lock params error not found", err)
 	}
